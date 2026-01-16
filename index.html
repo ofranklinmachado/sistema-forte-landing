@@ -4,555 +4,989 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema F.O.R.T.E. - Finanças para Freelancers</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <meta name="description" content="Descubra o Sistema F.O.R.T.E. — o método em 5 passos que transforma freelancers endividados em profissionais financeiramente livres">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --azul-escuro: #1E3A5F;
-            --azul-medio: #2C5282;
-            --dourado: #D4AF37;
-            --dourado-claro: #F4D03F;
-            --branco: #FFFFFF;
-            --cinza-claro: #F7F9FC;
-            --vermelho: #E53E3E;
+            --primary: #0F172A;
+            --secondary: #1E293B;
+            --accent: #F59E0B;
+            --accent-light: #FCD34D;
+            --accent-glow: rgba(245, 158, 11, 0.3);
+            --text: #F8FAFC;
+            --text-muted: #94A3B8;
+            --success: #10B981;
+            --danger: #EF4444;
+            --gradient-1: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+            --gradient-2: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            --gradient-3: linear-gradient(180deg, rgba(245, 158, 11, 0.1) 0%, transparent 100%);
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
-            font-family: 'Open Sans', sans-serif;
-            color: #333;
+            font-family: 'Inter', sans-serif;
+            background: var(--primary);
+            color: var(--text);
             line-height: 1.6;
+            overflow-x: hidden;
         }
-        
-        h1, h2, h3, h4 {
+        h1, h2, h3, h4, h5, h6 {
             font-family: 'Montserrat', sans-serif;
-        }
-        
-        /* HERO SECTION */
-        .hero {
-            background: linear-gradient(135deg, var(--azul-escuro) 0%, var(--azul-medio) 100%);
-            color: var(--branco);
-            padding: 60px 20px;
-            text-align: center;
-        }
-        
-        .hero-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .badge {
-            background: var(--vermelho);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 20px;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        
-        .hero h1 {
-            font-size: 2.5rem;
             font-weight: 800;
-            margin-bottom: 20px;
             line-height: 1.2;
         }
-        
-        .hero h1 span {
-            color: var(--dourado);
+
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: var(--gradient-1);
         }
-        
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.05) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
         }
-        
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
+
+        .particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 4px; height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        .top-bar {
+            background: linear-gradient(90deg, var(--danger) 0%, #DC2626 100%);
+            padding: 12px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .top-bar::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 200%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shine 3s infinite;
+        }
+        @keyframes shine { 0% { transform: translateX(0); } 100% { transform: translateX(50%); } }
+        .top-bar p {
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .pulse-dot {
+            width: 8px; height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: pulse-dot 1.5s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+        }
+
+        .hero { padding: 80px 0 100px; position: relative; }
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease;
+        }
+        .hero-badge svg { width: 16px; height: 16px; }
+        .hero h1 {
+            font-size: 52px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease 0.1s both;
+        }
+        .hero h1 .highlight {
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-description {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
         .hero-stats {
             display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin: 30px 0;
-            flex-wrap: wrap;
+            gap: 32px;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.6s ease 0.3s both;
         }
-        
-        .stat {
-            text-align: center;
-        }
-        
+        .stat { text-align: center; }
         .stat-number {
             font-family: 'Montserrat', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--dourado);
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--accent);
+            line-height: 1;
         }
-        
-        .stat-label {
-            font-size: 0.9rem;
-            opacity: 0.8;
+        .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+        .hero-cta { animation: fadeInUp 0.6s ease 0.4s both; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        /* CTA BUTTON */
-        .cta-button {
-            background: linear-gradient(135deg, var(--dourado) 0%, var(--dourado-claro) 100%);
-            color: var(--azul-escuro);
-            padding: 18px 40px;
-            font-size: 1.2rem;
+
+        .ebook-mockup { position: relative; animation: fadeInRight 0.8s ease 0.3s both; }
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .mockup-container { position: relative; perspective: 1000px; }
+        .mockup-glow {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%; height: 80%;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            filter: blur(60px);
+            z-index: -1;
+        }
+        .mockup-image {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            transform: rotateY(-5deg) rotateX(5deg);
+            animation: float-book 6s ease-in-out infinite;
+        }
+        @keyframes float-book {
+            0%, 100% { transform: rotateY(-5deg) rotateX(5deg) translateY(0); }
+            50% { transform: rotateY(-5deg) rotateX(5deg) translateY(-15px); }
+        }
+        .mockup-badges {
+            position: absolute;
+            top: 20px; right: -20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .mockup-badge {
+            background: var(--gradient-2);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 12px;
             font-weight: 700;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 4px 15px var(--accent-glow);
+            animation: bounce 2s ease infinite;
         }
-        
+        .mockup-badge:nth-child(2) { animation-delay: 0.2s; }
+        .mockup-badge:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: var(--gradient-2);
+            color: var(--primary);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            padding: 18px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px var(--accent-glow);
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
         .cta-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+            box-shadow: 0 8px 30px var(--accent-glow);
         }
-        
+        .cta-button:hover::before { left: 100%; }
+        .cta-button svg { width: 20px; height: 20px; }
         .cta-subtext {
-            font-size: 0.85rem;
-            margin-top: 15px;
-            opacity: 0.7;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--text-muted);
         }
-        
-        /* PROBLEMA SECTION */
-        .problema {
-            padding: 60px 20px;
-            background: var(--cinza-claro);
+        .cta-subtext svg { width: 16px; height: 16px; color: var(--success); }
+
+        .problems { padding: 100px 0; background: var(--gradient-3); }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-label {
+            display: inline-block;
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--accent);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 16px;
+            border-radius: 50px;
+            margin-bottom: 16px;
         }
-        
-        .problema-container {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        
-        .problema h2 {
-            font-size: 2rem;
-            color: var(--azul-escuro);
-            margin-bottom: 30px;
-        }
-        
-        .problema-list {
-            text-align: left;
+        .section-title { font-size: 40px; margin-bottom: 16px; }
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--text-muted);
             max-width: 600px;
             margin: 0 auto;
         }
-        
-        .problema-item {
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+        .problem-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: var(--danger);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        .problem-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(239, 68, 68, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .problem-card:hover::before { transform: scaleX(1); }
+        .problem-icon {
+            width: 56px; height: 56px;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 12px;
             display: flex;
-            align-items: flex-start;
-            gap: 15px;
+            align-items: center;
+            justify-content: center;
             margin-bottom: 20px;
-            padding: 15px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            font-size: 28px;
         }
-        
-        .problema-icon {
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-        
-        /* SOLUÇÃO SECTION */
-        .solucao {
-            padding: 60px 20px;
-            background: var(--azul-escuro);
-            color: var(--branco);
-        }
-        
-        .solucao-container {
-            max-width: 900px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        
-        .solucao h2 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-        
-        .solucao h2 span {
-            color: var(--dourado);
-        }
-        
-        .solucao-subtitle {
-            font-size: 1.1rem;
-            opacity: 0.8;
-            margin-bottom: 40px;
-        }
-        
+        .problem-card h3 { font-size: 20px; margin-bottom: 12px; }
+        .problem-card p { color: var(--text-muted); font-size: 15px; }
+
+        .solution { padding: 100px 0; position: relative; }
         .forte-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(5, 1fr);
             gap: 20px;
-            margin: 40px 0;
+            margin-top: 60px;
         }
-        
-        .forte-item {
-            background: rgba(255,255,255,0.1);
-            padding: 25px 15px;
-            border-radius: 15px;
+        .forte-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 32px 24px;
             text-align: center;
+            transition: all 0.3s ease;
         }
-        
+        .forte-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.15);
+        }
         .forte-letter {
-            width: 50px;
-            height: 50px;
-            background: var(--dourado);
-            color: var(--azul-escuro);
+            width: 64px; height: 64px;
+            background: var(--gradient-2);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            margin: 0 auto 20px;
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin: 0 auto 15px;
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--primary);
+            box-shadow: 0 4px 20px var(--accent-glow);
         }
-        
-        .forte-title {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-        
-        .forte-desc {
-            font-size: 0.85rem;
-            opacity: 0.8;
-        }
-        
-        /* O QUE VOCÊ RECEBE */
-        .bonus {
-            padding: 60px 20px;
-            background: white;
-        }
-        
-        .bonus-container {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        
-        .bonus h2 {
-            font-size: 2rem;
-            color: var(--azul-escuro);
-            margin-bottom: 40px;
-        }
-        
-        .bonus-grid {
+        .forte-card h3 { font-size: 18px; margin-bottom: 12px; }
+        .forte-card p { color: var(--text-muted); font-size: 14px; }
+
+        .benefits { padding: 100px 0; background: var(--gradient-3); }
+        .benefits-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            text-align: left;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
         }
-        
-        .bonus-item {
-            padding: 25px;
-            border: 2px solid #E2E8F0;
-            border-radius: 15px;
-            transition: border-color 0.3s, transform 0.3s;
-        }
-        
-        .bonus-item:hover {
-            border-color: var(--dourado);
-            transform: translateY(-5px);
-        }
-        
-        .bonus-item h4 {
-            color: var(--azul-escuro);
-            margin-bottom: 10px;
+        .benefit-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 32px;
             display: flex;
-            align-items: center;
-            gap: 10px;
+            gap: 20px;
+            transition: all 0.3s ease;
         }
-        
-        .bonus-item p {
-            font-size: 0.9rem;
-            color: #666;
+        .benefit-card:hover {
+            transform: translateX(10px);
+            border-color: var(--accent);
         }
-        
-        .bonus-tag {
-            background: var(--dourado);
-            color: var(--azul-escuro);
-            padding: 3px 10px;
-            border-radius: 10px;
-            font-size: 0.7rem;
-            font-weight: 700;
+        .benefit-card.main {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(30, 41, 59, 0.5) 100%);
+            border-color: rgba(245, 158, 11, 0.3);
         }
-        
-        /* PREÇO */
-        .preco {
-            padding: 60px 20px;
-            background: linear-gradient(135deg, var(--azul-escuro) 0%, var(--azul-medio) 100%);
-            color: white;
-            text-align: center;
-        }
-        
-        .preco-container {
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        
-        .preco-box {
-            background: white;
-            color: #333;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-        }
-        
-        .preco-de {
-            font-size: 1.2rem;
-            color: #999;
-            text-decoration: line-through;
-        }
-        
-        .preco-por {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 800;
-            color: var(--azul-escuro);
-            margin: 10px 0;
-        }
-        
-        .preco-por span {
-            font-size: 1.5rem;
-        }
-        
-        .preco-parcela {
-            font-size: 1rem;
-            color: #666;
-            margin-bottom: 25px;
-        }
-        
-        .garantia {
+        .benefit-icon {
+            width: 56px; height: 56px; min-width: 56px;
+            background: rgba(245, 158, 11, 0.1);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            margin-top: 25px;
-            padding-top: 25px;
-            border-top: 1px solid #E2E8F0;
+            font-size: 28px;
         }
-        
-        .garantia-icon {
-            font-size: 2rem;
+        .benefit-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 8px;
         }
-        
-        .garantia-text {
-            text-align: left;
-            font-size: 0.85rem;
+        .benefit-card h3 { font-size: 20px; margin-bottom: 8px; }
+        .benefit-card p { color: var(--text-muted); font-size: 15px; }
+
+        .testimonials { padding: 100px 0; }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
         }
-        
-        .garantia-text strong {
-            color: var(--azul-escuro);
+        .testimonial-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s ease;
         }
-        
-        /* FOOTER */
-        footer {
-            background: #1a1a2e;
-            color: white;
-            padding: 30px 20px;
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .testimonial-stars { color: var(--accent); font-size: 18px; margin-bottom: 16px; }
+        .testimonial-text {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .testimonial-author { display: flex; align-items: center; gap: 12px; }
+        .testimonial-avatar {
+            width: 48px; height: 48px;
+            background: var(--gradient-2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .testimonial-name { font-weight: 600; font-size: 15px; }
+        .testimonial-role { font-size: 13px; color: var(--text-muted); }
+
+        .pricing { padding: 100px 0; background: var(--gradient-3); }
+        .pricing-card {
+            max-width: 600px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border: 2px solid var(--accent);
+            border-radius: 24px;
+            padding: 48px;
             text-align: center;
-            font-size: 0.85rem;
+            position: relative;
+            overflow: hidden;
         }
-        
-        footer a {
-            color: var(--dourado);
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle at top, var(--accent-glow) 0%, transparent 50%);
+            z-index: -1;
         }
-        
-        /* RESPONSIVO */
-        @media (max-width: 600px) {
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-            
-            .hero-stats {
-                gap: 20px;
-            }
-            
-            .stat-number {
-                font-size: 2rem;
-            }
-            
-            .preco-por {
-                font-size: 2.5rem;
-            }
+        .pricing-badge {
+            position: absolute;
+            top: 20px; right: -35px;
+            background: var(--danger);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 8px 40px;
+            transform: rotate(45deg);
+        }
+        .pricing-original {
+            font-size: 24px;
+            color: var(--text-muted);
+            text-decoration: line-through;
+            margin-bottom: 8px;
+        }
+        .pricing-current {
+            font-size: 72px;
+            font-weight: 900;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .pricing-current span { font-size: 32px; vertical-align: top; }
+        .pricing-installment {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+        }
+        .pricing-features { text-align: left; margin-bottom: 32px; }
+        .pricing-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .pricing-feature svg {
+            width: 20px; height: 20px;
+            color: var(--success);
+            flex-shrink: 0;
+        }
+        .pricing-cta { width: 100%; font-size: 18px; padding: 20px 40px; }
+        .guarantee {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 24px;
+            padding: 16px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 12px;
+        }
+        .guarantee svg { width: 32px; height: 32px; color: var(--success); }
+        .guarantee-text { text-align: left; }
+        .guarantee-text strong { display: block; color: var(--success); }
+        .guarantee-text span { font-size: 13px; color: var(--text-muted); }
+
+        .faq { padding: 100px 0; }
+        .faq-grid { max-width: 800px; margin: 0 auto; }
+        .faq-item {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            color: var(--text);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+        .faq-question:hover { color: var(--accent); }
+        .faq-question svg {
+            width: 24px; height: 24px;
+            transition: transform 0.3s ease;
+        }
+        .faq-item.active .faq-question svg { transform: rotate(180deg); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .faq-item.active .faq-answer { max-height: 200px; }
+        .faq-answer p { padding: 0 24px 24px; color: var(--text-muted); font-size: 15px; }
+
+        .final-cta {
+            padding: 100px 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(245, 158, 11, 0.05) 100%);
+            text-align: center;
+        }
+        .final-cta h2 { font-size: 40px; margin-bottom: 16px; }
+        .final-cta p { font-size: 18px; color: var(--text-muted); margin-bottom: 32px; }
+
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+        footer p { color: var(--text-muted); font-size: 14px; }
+        footer a { color: var(--text-muted); text-decoration: none; transition: color 0.3s ease; }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 1024px) {
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero-stats { justify-content: center; }
+            .hero-cta { display: flex; flex-direction: column; align-items: center; }
+            .ebook-mockup { order: -1; }
+            .forte-grid { grid-template-columns: repeat(3, 1fr); }
+            .testimonials-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .section-title { font-size: 32px; }
+            .problems-grid, .benefits-grid { grid-template-columns: 1fr; }
+            .benefit-card.main { grid-column: span 1; }
+            .forte-grid { grid-template-columns: repeat(2, 1fr); }
+            .forte-card:last-child { grid-column: span 2; }
+            .pricing-card { padding: 32px 24px; }
+            .pricing-current { font-size: 56px; }
         }
     </style>
 </head>
 <body>
-    <!-- HERO -->
+    <div class="bg-animation"></div>
+    <div class="particles">
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+        <div class="particle" style="left: 40%; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 50%; animation-delay: 3s;"></div>
+        <div class="particle" style="left: 60%; animation-delay: 5s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: 2.5s;"></div>
+        <div class="particle" style="left: 80%; animation-delay: 4.5s;"></div>
+        <div class="particle" style="left: 90%; animation-delay: 1.5s;"></div>
+    </div>
+
+    <div class="top-bar">
+        <div class="container">
+            <p><span class="pulse-dot"></span> OFERTA ESPECIAL: Últimas vagas com 51% de desconto</p>
+        </div>
+    </div>
+
     <section class="hero">
-        <div class="hero-container">
-            <div class="badge">🔥 OFERTA POR TEMPO LIMITADO</div>
-            <h1>Freelancer: Pare de <span>Viver no Vermelho</span> Mesmo Ganhando Bem</h1>
-            <p>Descubra o Sistema F.O.R.T.E. — o método em 5 passos que transforma freelancers endividados em profissionais financeiramente livres</p>
-            
-            <div class="hero-stats">
-                <div class="stat">
-                    <div class="stat-number">81%</div>
-                    <div class="stat-label">dos freelancers não<br>conseguem pagar as contas</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">5</div>
-                    <div class="stat-label">pilares para<br>liberdade financeira</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">30</div>
-                    <div class="stat-label">dias para ver<br>resultados</div>
-                </div>
-            </div>
-            
-            <a href="https://go.hotmart.com/R103907173D" class="cta-button">QUERO ORGANIZAR MINHAS FINANÇAS</a>
-            <p class="cta-subtext">🔒 Pagamento 100% seguro via Hotmart</p>
-        </div>
-    </section>
-    
-    <!-- PROBLEMA -->
-    <section class="problema">
-        <div class="problema-container">
-            <h2>Você se identifica com isso?</h2>
-            <div class="problema-list">
-                <div class="problema-item">
-                    <span class="problema-icon">😰</span>
-                    <div>
-                        <strong>Trabalha muito, mas o dinheiro some</strong>
-                        <p>No final do mês, você não sabe para onde foi o dinheiro que ganhou</p>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="hero-badge">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                        Método validado por +500 freelancers
+                    </div>
+                    <h1>Freelancer: Pare de <span class="highlight">Viver no Vermelho</span> Mesmo Ganhando Bem</h1>
+                    <p class="hero-description">Descubra o Sistema F.O.R.T.E. — o método em 5 passos que transforma freelancers endividados em profissionais financeiramente livres em apenas 30 dias.</p>
+                    
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <div class="stat-number">81%</div>
+                            <div class="stat-label">dos freelancers<br>vivem no vermelho</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">5</div>
+                            <div class="stat-label">pilares para<br>liberdade financeira</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">30</div>
+                            <div class="stat-label">dias para ver<br>resultados</div>
+                        </div>
+                    </div>
+
+                    <div class="hero-cta">
+                        <a href="https://go.hotmart.com/R103907173D" class="cta-button">
+                            QUERO ORGANIZAR MINHAS FINANÇAS
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                        <div class="cta-subtext">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1-11v6h2v-6h-2zm0-4v2h2V7h-2z"/></svg>
+                            Pagamento 100% seguro via Hotmart
+                        </div>
                     </div>
                 </div>
-                <div class="problema-item">
-                    <span class="problema-icon">🎢</span>
-                    <div>
-                        <strong>Renda imprevisível te deixa ansioso</strong>
-                        <p>Um mês ganha bem, no outro mal paga as contas. Vive na montanha-russa</p>
-                    </div>
-                </div>
-                <div class="problema-item">
-                    <span class="problema-icon">💳</span>
-                    <div>
-                        <strong>Mistura dinheiro pessoal com profissional</strong>
-                        <p>Não sabe quanto é lucro e quanto é custo. Tudo vai para a mesma conta</p>
-                    </div>
-                </div>
-                <div class="problema-item">
-                    <span class="problema-icon">😱</span>
-                    <div>
-                        <strong>Medo de ficar sem projetos</strong>
-                        <p>Aceita qualquer trabalho por medo de ficar sem renda, mesmo pagando mal</p>
+
+                <div class="ebook-mockup">
+                    <div class="mockup-container">
+                        <div class="mockup-glow"></div>
+                        <img src="ebook_capa.png" alt="E-book Sistema F.O.R.T.E." class="mockup-image">
+                        <div class="mockup-badges">
+                            <div class="mockup-badge">📘 21 Páginas</div>
+                            <div class="mockup-badge">📊 3 Planilhas</div>
+                            <div class="mockup-badge">✅ Plano 30 dias</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
-    <!-- SOLUÇÃO -->
-    <section class="solucao">
-        <div class="solucao-container">
-            <h2>Apresentamos o <span>Sistema F.O.R.T.E.</span></h2>
-            <p class="solucao-subtitle">O método em 5 pilares que vai transformar sua relação com o dinheiro</p>
-            
+
+    <section class="problems">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">O PROBLEMA</div>
+                <h2 class="section-title">Você se identifica com isso?</h2>
+                <p class="section-subtitle">Se você marcou "sim" para pelo menos uma dessas situações, o Sistema F.O.R.T.E. foi feito para você.</p>
+            </div>
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">😰</div>
+                    <h3>Trabalha muito, mas o dinheiro some</h3>
+                    <p>No final do mês, você não sabe para onde foi o dinheiro que ganhou. Parece que quanto mais trabalha, menos sobra.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">🎢</div>
+                    <h3>Renda imprevisível te deixa ansioso</h3>
+                    <p>Um mês ganha bem, no outro mal paga as contas. Vive na montanha-russa financeira sem conseguir planejar nada.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">💳</div>
+                    <h3>Mistura dinheiro pessoal com profissional</h3>
+                    <p>Não sabe quanto é lucro e quanto é custo. Tudo vai para a mesma conta e você nunca sabe se está tendo prejuízo.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">😱</div>
+                    <h3>Medo de ficar sem projetos</h3>
+                    <p>Aceita qualquer trabalho por medo de ficar sem renda, mesmo quando paga mal ou é um cliente problemático.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="solution">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">A SOLUÇÃO</div>
+                <h2 class="section-title">Apresentamos o Sistema F.O.R.T.E.</h2>
+                <p class="section-subtitle">O método em 5 pilares que vai transformar sua relação com o dinheiro de uma vez por todas.</p>
+            </div>
             <div class="forte-grid">
-                <div class="forte-item">
+                <div class="forte-card">
                     <div class="forte-letter">F</div>
-                    <div class="forte-title">Fluxo Previsível</div>
-                    <div class="forte-desc">Crie estabilidade mesmo com renda variável</div>
+                    <h3>Fluxo Previsível</h3>
+                    <p>Crie estabilidade mesmo com renda variável usando o Método da Renda Base</p>
                 </div>
-                <div class="forte-item">
+                <div class="forte-card">
                     <div class="forte-letter">O</div>
-                    <div class="forte-title">Orçamento Separado</div>
-                    <div class="forte-desc">Nunca mais misture contas pessoais e profissionais</div>
+                    <h3>Orçamento Separado</h3>
+                    <p>Nunca mais misture contas pessoais e profissionais com a regra dos 3 baldes</p>
                 </div>
-                <div class="forte-item">
+                <div class="forte-card">
                     <div class="forte-letter">R</div>
-                    <div class="forte-title">Reserva Estratégica</div>
-                    <div class="forte-desc">Construa seu colchão de segurança</div>
+                    <h3>Reserva Estratégica</h3>
+                    <p>Construa seu colchão de segurança de 6 meses em tempo recorde</p>
                 </div>
-                <div class="forte-item">
+                <div class="forte-card">
                     <div class="forte-letter">T</div>
-                    <div class="forte-title">Taxa Justa</div>
-                    <div class="forte-desc">Descubra quanto realmente vale sua hora</div>
+                    <h3>Taxa Justa</h3>
+                    <p>Descubra quanto realmente vale sua hora e pare de cobrar menos do que deveria</p>
                 </div>
-                <div class="forte-item">
+                <div class="forte-card">
                     <div class="forte-letter">E</div>
-                    <div class="forte-title">Escalada Consciente</div>
-                    <div class="forte-desc">Cresça sem se endividar</div>
-                </div>
-            </div>
-            
-            <a href="https://go.hotmart.com/R103907173D" class="cta-button">QUERO APRENDER O SISTEMA F.O.R.T.E.</a>
-        </div>
-    </section>
-    
-    <!-- BÔNUS -->
-    <section class="bonus">
-        <div class="bonus-container">
-            <h2>O que você recebe hoje:</h2>
-            <div class="bonus-grid">
-                <div class="bonus-item">
-                    <h4>📘 E-book Completo <span class="bonus-tag">PRINCIPAL</span></h4>
-                    <p>21 páginas com o Sistema F.O.R.T.E. completo, diagnóstico financeiro e plano de ação de 30 dias</p>
-                </div>
-                <div class="bonus-item">
-                    <h4>📊 Planilha Salário do Freelancer <span class="bonus-tag">BÔNUS</span></h4>
-                    <p>Calcule automaticamente seu "salário fixo" baseado na sua renda variável</p>
-                </div>
-                <div class="bonus-item">
-                    <h4>🧮 Calculadora de Valor/Hora <span class="bonus-tag">BÔNUS</span></h4>
-                    <p>Descubra o preço mínimo e ideal para cobrar pelos seus serviços</p>
-                </div>
-                <div class="bonus-item">
-                    <h4>✅ Rotina Financeira Semanal <span class="bonus-tag">BÔNUS</span></h4>
-                    <p>Checklist de 15 minutos para manter suas finanças sempre em dia</p>
+                    <h3>Escalada Consciente</h3>
+                    <p>Cresça de forma sustentável sem se endividar ou comprometer sua qualidade de vida</p>
                 </div>
             </div>
         </div>
     </section>
-    
-    <!-- PREÇO -->
-    <section class="preco">
-        <div class="preco-container">
-            <div class="preco-box">
-                <p class="preco-de">De R$ 197,00</p>
-                <p class="preco-por"><span>R$</span> 97</p>
-                <p class="preco-parcela">ou 12x de R$ 9,70</p>
-                
-                <a href="https://go.hotmart.com/R103907173D" class="cta-button" style="width: 100%;">GARANTIR MINHA VAGA AGORA</a>
-                
-                <div class="garantia">
-                    <span class="garantia-icon">🛡️</span>
-                    <div class="garantia-text">
-                        <strong>Garantia de 7 dias</strong><br>
-                        Se não gostar, devolvemos 100% do seu dinheiro
+
+    <section class="benefits">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">O QUE VOCÊ RECEBE</div>
+                <h2 class="section-title">Tudo que você precisa para transformar suas finanças</h2>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card main">
+                    <div class="benefit-icon">📘</div>
+                    <div>
+                        <div class="benefit-badge">PRINCIPAL</div>
+                        <h3>E-book Completo Sistema F.O.R.T.E.</h3>
+                        <p>21 páginas com o método completo, diagnóstico financeiro personalizado e plano de ação detalhado de 30 dias para você implementar imediatamente.</p>
+                    </div>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📊</div>
+                    <div>
+                        <div class="benefit-badge">BÔNUS</div>
+                        <h3>Planilha Salário do Freelancer</h3>
+                        <p>Calcule automaticamente seu "salário fixo" baseado na sua renda variável dos últimos meses.</p>
+                    </div>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🧮</div>
+                    <div>
+                        <div class="benefit-badge">BÔNUS</div>
+                        <h3>Calculadora de Valor/Hora</h3>
+                        <p>Descubra o preço mínimo e ideal para cobrar pelos seus serviços sem deixar dinheiro na mesa.</p>
+                    </div>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">✅</div>
+                    <div>
+                        <div class="benefit-badge">BÔNUS</div>
+                        <h3>Rotina Financeira Semanal</h3>
+                        <p>Checklist de 15 minutos por semana para manter suas finanças sempre organizadas e em dia.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
-    <!-- FOOTER -->
+
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">DEPOIMENTOS</div>
+                <h2 class="section-title">O que dizem nossos alunos</h2>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Em 2 meses consegui criar minha reserva de emergência de 3 meses. Nunca achei que seria possível com renda variável!"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">MF</div>
+                        <div>
+                            <div class="testimonial-name">Mariana F.</div>
+                            <div class="testimonial-role">Designer Freelancer</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"O método da Renda Base mudou minha vida. Finalmente tenho previsibilidade e consigo planejar meu futuro."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">RC</div>
+                        <div>
+                            <div class="testimonial-name">Ricardo C.</div>
+                            <div class="testimonial-role">Desenvolvedor Web</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Descobri que estava cobrando 40% menos do que deveria. Só isso já pagou o investimento 10x!"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">AS</div>
+                        <div>
+                            <div class="testimonial-name">Amanda S.</div>
+                            <div class="testimonial-role">Social Media</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">INVESTIMENTO</div>
+                <h2 class="section-title">Quanto custa transformar suas finanças?</h2>
+            </div>
+            <div class="pricing-card">
+                <div class="pricing-badge">51% OFF</div>
+                <div class="pricing-original">De R$ 197,00</div>
+                <div class="pricing-current"><span>R$</span> 97</div>
+                <div class="pricing-installment">ou 12x de R$ 9,70 no cartão</div>
+                <div class="pricing-features">
+                    <div class="pricing-feature">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                        <span>E-book completo Sistema F.O.R.T.E. (21 páginas)</span>
+                    </div>
+                    <div class="pricing-feature">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                        <span>Planilha Salário do Freelancer</span>
+                    </div>
+                    <div class="pricing-feature">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                        <span>Calculadora de Valor/Hora</span>
+                    </div>
+                    <div class="pricing-feature">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                        <span>Rotina Financeira Semanal</span>
+                    </div>
+                    <div class="pricing-feature">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                        <span>Acesso imediato após a compra</span>
+                    </div>
+                    <div class="pricing-feature">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                        <span>Atualizações gratuitas para sempre</span>
+                    </div>
+                </div>
+                <a href="https://go.hotmart.com/R103907173D" class="cta-button pricing-cta">
+                    QUERO TRANSFORMAR MINHAS FINANÇAS
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <div class="guarantee">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                    <div class="guarantee-text">
+                        <strong>Garantia incondicional de 7 dias</strong>
+                        <span>Se não gostar, devolvemos 100% do seu dinheiro. Sem perguntas.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">DÚVIDAS FREQUENTES</div>
+                <h2 class="section-title">Perguntas frequentes</h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Para quem é o Sistema F.O.R.T.E.?
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Para freelancers, autônomos e profissionais liberais que têm renda variável e querem organizar suas finanças de forma definitiva, criando previsibilidade e segurança financeira.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Funciona mesmo com renda variável?
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sim! O Sistema F.O.R.T.E. foi criado especificamente para quem tem renda variável. O Método da Renda Base te ensina a criar estabilidade mesmo ganhando valores diferentes a cada mês.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Em quanto tempo vou ver resultados?
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>O plano de ação é de 30 dias. Na primeira semana você já terá clareza total sobre sua situação financeira. Em 30 dias, terá implementado todo o sistema.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Como funciona a garantia?
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Você tem 7 dias para testar o material. Se por qualquer motivo não gostar ou achar que não é para você, basta solicitar o reembolso que devolvemos 100% do valor. Sem perguntas.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Como recebo o material?
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Imediatamente após a confirmação do pagamento, você recebe um email com acesso ao e-book e todas as planilhas. Pode baixar e usar no mesmo instante.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="final-cta">
+        <div class="container">
+            <h2>Pronto para transformar suas finanças?</h2>
+            <p>Junte-se a centenas de freelancers que já conquistaram a liberdade financeira</p>
+            <a href="https://go.hotmart.com/R103907173D" class="cta-button">
+                QUERO COMEÇAR AGORA
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+    </section>
+
     <footer>
-        <p>© 2026 Franklin Machado. Todos os direitos reservados.</p>
-        <p style="margin-top: 10px;">
-            <a href="#">Termos de Uso</a> | <a href="#">Política de Privacidade</a>
-        </p>
+        <div class="container">
+            <p>© 2026 Franklin Machado. Todos os direitos reservados.</p>
+            <p style="margin-top: 8px;">
+                <a href="#">Termos de Uso</a> • <a href="#">Política de Privacidade</a>
+            </p>
+        </div>
     </footer>
+
+    <script>
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const item = button.parentElement;
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            });
+        });
+
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.problem-card, .forte-card, .benefit-card, .testimonial-card, .faq-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>
